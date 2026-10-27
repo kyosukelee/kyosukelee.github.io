@@ -85,12 +85,16 @@ nav.site a:hover{color:var(--ai)}
 /* works */
 .work{margin:0 0 96px}
 .work:last-child{margin-bottom:0}
+.shots{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;justify-items:start}
+.shots .shot{width:100%;max-width:380px}
+@media (min-width:880px){.shots{gap:40px}}
+.shots-note{font-size:12px;color:var(--faint);margin:10px 0 0;letter-spacing:.06em}
 .shot{margin:0}
 .shot img{display:block;width:100%;height:auto;border-radius:3px;background:var(--aijiro)}
-.shot .ph{display:none;aspect-ratio:16/10;border-radius:3px;background:var(--aijiro);color:var(--sub);font-size:13px;align-items:center;justify-content:center;text-align:center;padding:16px}
+.shot .ph{display:none;aspect-ratio:9/16;border-radius:3px;background:var(--aijiro);color:var(--sub);font-size:13px;align-items:center;justify-content:center;text-align:center;padding:16px}
 .shot.missing img{display:none}
 .shot.missing .ph{display:flex}
-.shot figcaption{font-size:12px;color:var(--faint);margin-top:8px;letter-spacing:.06em}
+.shot figcaption{font-size:12.5px;color:var(--sub);margin-top:8px;letter-spacing:.08em;text-align:center}
 .work-head{margin:28px 0 0}
 .work h3{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.5;letter-spacing:.08em;margin:0}
 .work .kind{font-size:13.5px;color:var(--faint);margin:6px 0 0;letter-spacing:.04em}
@@ -194,11 +198,8 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
       </div>
       <div>
         <article class="work" aria-labelledby="w1">
-          <figure class="shot" data-img="mimpakuShot">
-            <img alt="民泊管理デモの宿泊者ガイドと管理画面" loading="lazy">
-            <div class="ph">画面のスクリーンショット(images/mimpaku.png)をここに表示します</div>
-            <figcaption>画面はすべて架空のデータです</figcaption>
-          </figure>
+          <div class="shots" data-shots="mimpakuShots"></div>
+          <p class="shots-note">画面はすべて架空のデータです</p>
           <div class="work-head">
             <h3 id="w1">民泊管理デモ</h3>
             <p class="kind">民泊の運営代行を想定したデモ / 広島市中区のマンションの一室(架空)</p>
@@ -208,6 +209,7 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
           <div class="links">
             <a class="btn primary" data-href="mimpakuGuide" target="_blank" rel="noopener">宿泊者ガイドを開く</a>
             <a class="btn" data-href="mimpakuConsole" target="_blank" rel="noopener">管理画面を開く</a>
+            <a class="btn" data-href="mimpakuStaff" target="_blank" rel="noopener">清掃スタッフ用アプリを開く</a>
             <a class="btn" data-href="mimpakuRepo" target="_blank" rel="noopener">GitHubで見る</a>
           </div>
           <p class="note" data-bind="demoAccountNote"></p>
@@ -237,11 +239,8 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
         </article>
 
         <article class="work" aria-labelledby="w2">
-          <figure class="shot" data-img="portalShot">
-            <img alt="社内ポータルのお知らせ画面と乗り場情報の画面" loading="lazy">
-            <div class="ph">画面のスクリーンショット(images/portal.png)をここに表示します</div>
-            <figcaption>画面はすべて架空のデータです。非公開のため、画面の紹介のみです</figcaption>
-          </figure>
+          <div class="shots" data-shots="portalShots"></div>
+          <p class="shots-note">画面はすべて架空のデータです。非公開のため、画面の紹介のみです</p>
           <div class="work-head">
             <h3 id="w2">社内ポータル</h3>
             <p class="kind">タクシー会社向けの試作版(POC)</p>
@@ -382,18 +381,29 @@ const CONFIG = {
   name: "李匡\uFA4F",
   mimpakuGuide: "",    // 例:"https://mimpaku-demo.pages.dev/p/hiroshima-demo"
   mimpakuConsole: "",  // 例:管理画面のURL
+  mimpakuStaff: "",    // 清掃スタッフ用アプリのURL(管理画面と同じなら空のまま)
+  demoUser: "",        // 閲覧専用デモアカウントのID(載せる場合のみ)
+  demoPass: "",        // 同パスワード(載せる場合のみ)
   mimpakuRepo: "https://github.com/kyosukelee/mimpaku-demo",
   demoAccountNote: "管理画面の閲覧専用デモアカウントは、ご希望の方にお知らせします。",
   github: "https://github.com/kyosukelee",
   mail: "",            // 例:"contact@example.com"(空なら「準備中」と表示)
-  mimpakuShot: "images/mimpaku.png",
-  portalShot: "images/portal.png"
+  // スクリーンショット:images フォルダに置き、ファイル名と見出しを合わせる
+  mimpakuShots: [
+    { src: "images/mimpaku-guide.png", label: "宿泊者ガイド" },
+    { src: "images/mimpaku-admin.png", label: "管理画面" }
+  ],
+  portalShots: [
+    { src: "images/portal-app.png", label: "社員画面" },
+    { src: "images/portal-admin.png", label: "管理画面" }
+  ]
 };
 /* ========================================== */
 
 document.querySelectorAll('[data-bind]').forEach(el => {
   const k = el.dataset.bind;
   if (k === 'year') { el.textContent = new Date().getFullYear(); return; }
+  if (k === 'demoAccountNote' && CONFIG.demoUser) { el.textContent = '閲覧専用デモアカウント ID:' + CONFIG.demoUser + ' / パスワード:' + CONFIG.demoPass + '(内容の変更はできません)'; return; }
   if (k === 'mailNote') { el.textContent = CONFIG.mail ? '' : 'メールアドレスは準備中です。GitHubからもご連絡いただけます。'; return; }
   if (CONFIG[k] !== undefined) el.textContent = CONFIG[k];
 });
@@ -405,12 +415,23 @@ document.querySelectorAll('[data-href]').forEach(a => {
   if (url) a.href = url; else a.remove();
 });
 
-document.querySelectorAll('figure.shot').forEach(fig => {
-  const img = fig.querySelector('img');
-  const src = CONFIG[fig.dataset.img];
-  if (!src) { fig.classList.add('missing'); return; }
-  img.addEventListener('error', () => fig.classList.add('missing'));
-  img.src = src;
+document.querySelectorAll('.shots').forEach(box => {
+  (CONFIG[box.dataset.shots] || []).forEach(item => {
+    const fig = document.createElement('figure');
+    fig.className = 'shot';
+    const img = document.createElement('img');
+    img.alt = item.label + 'の画面';
+    img.loading = 'lazy';
+    const ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.textContent = item.label + 'のスクリーンショット(' + item.src + ')';
+    const cap = document.createElement('figcaption');
+    cap.textContent = item.label;
+    img.addEventListener('error', () => fig.classList.add('missing'));
+    img.src = item.src;
+    fig.append(img, ph, cap);
+    box.append(fig);
+  });
 });
 
 document.querySelectorAll('.delta .draw').forEach(p => {
