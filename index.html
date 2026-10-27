@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>李匡&#xFA4F; | 現場の情報共有を、小さな仕組みで</title>
+<meta name="description" content="広島を拠点に、民泊やタクシーの現場の情報共有を、無料・低コストのツールで整えています。制作物と経歴の紹介。">
+<style>
+:root{
+  --bg:#F5F3EE; --paper:#FBFAF7; --ink:#22252B; --sub:#5F636B; --faint:#8A8E95;
+  --ai:#1F3A5F; --aijiro:#DCE2E8; --line:#DAD7CF; --shu:#B33A2E;
+  --serif:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP","Noto Serif CJK JP",serif;
+  --sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#101A27; --paper:#162234; --ink:#ECE9E2; --sub:#AEB5BF; --faint:#7F8894;
+    --ai:#8FB0D6; --aijiro:#22344B; --line:#2A3A50; --shu:#D9604F;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.95;letter-spacing:.02em;-webkit-text-size-adjust:100%}
+a{color:var(--ai);text-underline-offset:4px;text-decoration-thickness:1px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--shu);outline-offset:4px}
+h1,h2,h3{word-break:auto-phrase}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+@media (max-width:600px){.wrap{padding:0 20px}}
+
+.kasuri{height:8px;background-color:var(--ai);
+  background-image:linear-gradient(90deg,transparent 5px,var(--bg) 5px 13px,transparent 13px),linear-gradient(90deg,transparent 8px,var(--bg) 8px 10px,transparent 10px);
+  background-size:18px 2px,18px 6px;background-position:0 3px,0 1px;background-repeat:repeat-x}
+
+/* header */
+header.site{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.16em;color:var(--ink);text-decoration:none}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--shu);color:#FBFAF7;border-radius:3px;font-size:11px;line-height:1.05;writing-mode:vertical-rl;letter-spacing:0}
+nav.site{display:flex;gap:28px}
+nav.site a{color:var(--sub);text-decoration:none;font-size:13.5px;letter-spacing:.12em}
+nav.site a:hover{color:var(--ai)}
+@media (max-width:600px){nav.site{gap:14px}nav.site a{font-size:12.5px;letter-spacing:.06em}.brand{font-size:15px;letter-spacing:.1em}}
+
+/* hero */
+.hero{padding:72px 0 56px}
+.hero-grid{display:grid;gap:40px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,34px);line-height:1.65;letter-spacing:.12em;margin:0}
+.role{font-size:13.5px;color:var(--faint);letter-spacing:.14em;margin:0 0 18px}
+.lead{margin:0;color:var(--sub);max-width:33em}
+.langs{margin:26px 0 0;display:grid;gap:10px;max-width:36em}
+.langs p{margin:0;font-size:13.5px;line-height:1.75;color:var(--faint)}
+@media (min-width:880px){
+  .hero{padding:96px 0 72px;min-height:calc(88vh - 76px);display:flex;flex-direction:column;justify-content:center}
+  .hero-grid{grid-template-columns:1fr auto;gap:96px;align-items:end}
+  .hero h1{grid-column:2;grid-row:1;writing-mode:vertical-rl;font-size:44px;line-height:1.8;letter-spacing:.18em;justify-self:end}
+  .hero-text{grid-column:1;grid-row:1;padding-bottom:6px}
+}
+.delta{display:block;width:100%;height:auto;margin:56px 0 0}
+.delta path.flow{fill:none;stroke:var(--ai);stroke-width:1;opacity:.45;stroke-linecap:round}
+.delta path.main{fill:none;stroke:var(--ai);stroke-width:2;stroke-linecap:round}
+.delta circle{fill:var(--shu)}
+.delta .draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 2.4s cubic-bezier(.2,.7,.2,1) forwards}
+.delta .main.draw{animation-delay:1.5s;animation-duration:1.1s}
+.delta circle{opacity:0;animation:pop .5s ease-out 2.6s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.delta .draw{animation:none;stroke-dashoffset:0}.delta circle{animation:none;opacity:1}}
+.delta-caption{font-size:12px;color:var(--faint);letter-spacing:.08em;margin:8px 0 0;display:flex;justify-content:space-between}
+
+/* section frame */
+.sec{padding:96px 0;border-top:1px solid var(--line)}
+.sec-grid{display:grid;gap:36px}
+@media (min-width:880px){
+  .sec-grid{grid-template-columns:220px 1fr;gap:64px}
+  .sec-head{position:sticky;top:104px;align-self:start}
+}
+.sec-head h2{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.4;letter-spacing:.2em;margin:0}
+.sec-head .en{display:block;font-family:var(--serif);font-size:13px;letter-spacing:.14em;color:var(--faint);margin-top:6px}
+.sec-head p{font-size:14px;color:var(--sub);margin:16px 0 0;line-height:1.85}
+@media (max-width:600px){.sec{padding:72px 0}}
+
+/* works */
+.work{margin:0 0 96px}
+.work:last-child{margin-bottom:0}
+.shot{margin:0}
+.shot img{display:block;width:100%;height:auto;border-radius:3px;background:var(--aijiro)}
+.shot .ph{display:none;aspect-ratio:16/10;border-radius:3px;background:var(--aijiro);color:var(--sub);font-size:13px;align-items:center;justify-content:center;text-align:center;padding:16px}
+.shot.missing img{display:none}
+.shot.missing .ph{display:flex}
+.shot figcaption{font-size:12px;color:var(--faint);margin-top:8px;letter-spacing:.06em}
+.work-head{margin:28px 0 0}
+.work h3{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.5;letter-spacing:.08em;margin:0}
+.work .kind{font-size:13.5px;color:var(--faint);margin:6px 0 0;letter-spacing:.04em}
+.work .problem{margin:18px 0 0;max-width:38em}
+.tags{display:flex;flex-wrap:wrap;gap:6px 18px;margin:18px 0 0;padding:0;list-style:none;font-size:13px;color:var(--sub);letter-spacing:.04em}
+.tags li::before{content:"";display:inline-block;width:5px;height:5px;background:var(--ai);transform:rotate(45deg);margin:0 8px 2px 0}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 0}
+.btn{display:inline-block;padding:10px 22px;border-radius:2px;font-size:14px;letter-spacing:.1em;text-decoration:none;border:1px solid var(--ai);color:var(--ai)}
+.btn.primary{background:var(--ai);color:var(--paper)}
+.btn:hover{filter:brightness(1.12)}
+.note{font-size:12.5px;color:var(--faint);margin:14px 0 0}
+details.more{margin:28px 0 0;border-top:1px solid var(--line)}
+details.more summary{list-style:none;cursor:pointer;padding:16px 0;font-size:14px;color:var(--ai);letter-spacing:.1em;display:flex;align-items:center;gap:10px}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"";width:9px;height:9px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .25s}
+details.more[open] summary::before{transform:rotate(225deg) translateY(-1px)}
+details.more .close-txt{display:none}
+details.more[open] .open-txt{display:none}
+details.more[open] .close-txt{display:inline}
+@media (prefers-reduced-motion:reduce){details.more summary::before{transition:none}}
+.more-body{padding:4px 0 8px;display:grid;gap:22px}
+@media (min-width:880px){.more-body{grid-template-columns:1fr 1fr;gap:28px 40px}}
+.more-body h4{font-size:13.5px;color:var(--sub);letter-spacing:.1em;font-weight:600;margin:0 0 6px}
+.more-body ul{margin:0;padding-left:1.1em;font-size:14.5px;line-height:1.85}
+.more-body li{margin:3px 0}
+
+/* career */
+.career{margin:0;display:grid;gap:40px}
+.career .item{display:grid;gap:6px}
+@media (min-width:600px){.career .item{grid-template-columns:10.5em 1fr;gap:24px}}
+.career .when{font-size:13px;color:var(--faint);letter-spacing:.06em;padding-top:3px}
+.career h3{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:.06em;line-height:1.55;margin:0 0 6px}
+.career p{margin:0;font-size:15px;line-height:1.9;color:var(--sub)}
+.career .now h3::after{content:"";display:inline-block;width:7px;height:7px;background:var(--shu);border-radius:50%;margin-left:10px;vertical-align:middle}
+
+/* profile */
+.facts{display:grid;gap:22px;margin:0}
+@media (min-width:600px){.facts{grid-template-columns:10.5em 1fr;gap:18px 24px}}
+.facts dt{font-size:13px;color:var(--faint);letter-spacing:.1em;padding-top:2px}
+.facts dd{margin:0}
+.facts ul{margin:0;padding:0;list-style:none;display:grid;gap:2px}
+.how{margin:48px 0 0;padding:28px 0 0;border-top:1px solid var(--line)}
+.how h3{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:.1em;margin:0 0 8px}
+.how p{margin:0;color:var(--sub);max-width:38em}
+
+/* services */
+.services{display:grid;gap:32px}
+@media (min-width:880px){.services{grid-template-columns:repeat(3,1fr);gap:36px}}
+.services div{border-top:2px solid var(--ai);padding-top:18px}
+.services h3{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:.06em;margin:0 0 8px}
+.services p{margin:0;color:var(--sub);font-size:14.5px;line-height:1.85}
+
+/* contact */
+.contact-big{font-family:var(--serif);font-weight:500;font-size:clamp(22px,4.6vw,30px);letter-spacing:.12em;line-height:1.6;margin:0 0 28px}
+footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding-bottom:40px;font-size:12px;color:var(--faint);letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="kasuri" aria-hidden="true"></div>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="seal" aria-hidden="true">匡&#xFA4F;</span><span data-bind="name">李匡&#xFA4F;</span></a>
+    <nav class="site" aria-label="ページ内の移動">
+      <a href="#works">制作物</a><a href="#career">経歴</a><a href="#profile">プロフィール</a><a href="#contact">連絡先</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-grid">
+        <h1>現場の「困った」を、<br>小さく速い仕組みで解決します。</h1>
+        <div class="hero-text">
+          <p class="role">広島 / 情報共有と業務の仕組みづくり</p>
+          <p class="lead">無料・低コストのツールを組み合わせて、民泊やタクシーの現場の情報共有を整えています。物流や管理部門の現場、業務自動化(RPA)の経験をもとに、いまは生成AIと組み合わせて、現場で使われる仕組みを作っています。</p>
+          <div class="langs">
+            <p lang="en">I build small, low-cost tools that solve everyday problems on the front line. Based in Hiroshima, working in Japanese, English, and Korean.</p>
+            <p lang="ko">히로시마를 거점으로, 현장의 불편을 작고 빠른 시스템으로 해결합니다. 일본어, 영어, 한국어로 대응할 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+      <svg class="delta" viewBox="0 0 1060 90" role="img" aria-label="ばらばらに流れる情報が、一つの仕組みにまとまっていく様子">
+        <path class="flow draw" d="M0 8 C 300 8, 480 30, 740 45"/>
+        <path class="flow draw" d="M0 27 C 320 27, 500 38, 740 45"/>
+        <path class="flow draw" d="M0 46 C 280 50, 520 46, 740 45"/>
+        <path class="flow draw" d="M0 65 C 330 66, 500 52, 740 45"/>
+        <path class="flow draw" d="M0 84 C 290 84, 520 60, 740 45"/>
+        <path class="main draw" d="M740 45 L 1046 45"/>
+        <circle cx="1052" cy="45" r="6"/>
+      </svg>
+      <p class="delta-caption" aria-hidden="true"><span>張り紙、口頭、LINE、電話</span><span>一つの仕組みへ</span></p>
+    </div>
+  </div>
+
+  <section id="works" class="sec">
+    <div class="wrap sec-grid">
+      <div class="sec-head">
+        <h2>制作物<span class="en">Works</span></h2>
+        <p>どちらも「誰の、どんな困りごとを、どう減らすか」から考えて作りました。</p>
+      </div>
+      <div>
+        <article class="work" aria-labelledby="w1">
+          <figure class="shot" data-img="mimpakuShot">
+            <img alt="民泊管理デモの宿泊者ガイドと管理画面" loading="lazy">
+            <div class="ph">画面のスクリーンショット(images/mimpaku.png)をここに表示します</div>
+            <figcaption>画面はすべて架空のデータです</figcaption>
+          </figure>
+          <div class="work-head">
+            <h3 id="w1">民泊管理デモ</h3>
+            <p class="kind">民泊の運営代行を想定したデモ / 広島市中区のマンションの一室(架空)</p>
+          </div>
+          <p class="problem">民泊の運営では、宿泊者からの問い合わせ、清掃の進み具合、オーナーへの報告が、電話やメッセージに散らばりがちです。宿泊者・管理者・清掃スタッフの3つの画面を、一つの仕組みにつなげました。</p>
+          <ul class="tags"><li>Astro</li><li>React</li><li>TypeScript</li><li>Supabase</li><li>Cloudflare Pages</li><li>PWA</li></ul>
+          <div class="links">
+            <a class="btn primary" data-href="mimpakuGuide" target="_blank" rel="noopener">宿泊者ガイドを開く</a>
+            <a class="btn" data-href="mimpakuConsole" target="_blank" rel="noopener">管理画面を開く</a>
+            <a class="btn" data-href="mimpakuRepo" target="_blank" rel="noopener">GitHubで見る</a>
+          </div>
+          <p class="note" data-bind="demoAccountNote"></p>
+          <details class="more">
+            <summary><span class="open-txt">機能と技術の詳細を見る</span><span class="close-txt">詳細を閉じる</span></summary>
+            <div class="more-body">
+              <div>
+                <h4>できること</h4>
+                <ul>
+                  <li>宿泊者ガイド:QRコードで開き、日本語と英語を切り替えられる</li>
+                  <li>管理画面:物件の案内を編集すると、ガイドにすぐ反映される</li>
+                  <li>清掃スタッフ用アプリ:チェックリスト、写真、完了報告。電波が弱くても入力途中を保存</li>
+                  <li>閲覧専用のデモアカウントで、管理画面も実際に触れる</li>
+                </ul>
+              </div>
+              <div>
+                <h4>技術と選んだ理由</h4>
+                <ul>
+                  <li>Astro:文章中心の宿泊者ガイドを、通信の弱い環境でも速く開けるように</li>
+                  <li>React、TypeScript、PWA:管理画面と清掃スタッフ用アプリを、スマホにインストールして使えるように</li>
+                  <li>Supabase:立場ごとに見られる範囲を、行単位の権限で分けるために</li>
+                  <li>Cloudflare Pages:無料枠で公開し、鍵が必要な処理を画面から切り離すために</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article class="work" aria-labelledby="w2">
+          <figure class="shot" data-img="portalShot">
+            <img alt="社内ポータルのお知らせ画面と乗り場情報の画面" loading="lazy">
+            <div class="ph">画面のスクリーンショット(images/portal.png)をここに表示します</div>
+            <figcaption>画面はすべて架空のデータです。非公開のため、画面の紹介のみです</figcaption>
+          </figure>
+          <div class="work-head">
+            <h3 id="w2">社内ポータル</h3>
+            <p class="kind">タクシー会社向けの試作版(POC)</p>
+          </div>
+          <p class="problem">お知らせは掲示板の張り紙、現場の知恵は口頭やLINEと、情報が散らばって全員に届かない。そんな職場に向けて、スマホで使える無料の社内ポータルを作りました。</p>
+          <ul class="tags"><li>React</li><li>TypeScript</li><li>Supabase</li><li>Cloudflare Pages / Functions</li></ul>
+          <details class="more">
+            <summary><span class="open-txt">機能と設計の詳細を見る</span><span class="close-txt">詳細を閉じる</span></summary>
+            <div class="more-body">
+              <div>
+                <h4>できること</h4>
+                <ul>
+                  <li>対象者を選んで出せるお知らせと、重要なお知らせの未読確認</li>
+                  <li>乗り場の待ち状況を、乗務員どうしで報告し合う画面</li>
+                  <li>誰でも書けて、すぐ共有できる「知恵袋」</li>
+                  <li>イベント情報のカレンダー表示と地図表示</li>
+                  <li>権限ごとに任せる管理画面を選べる仕組み</li>
+                </ul>
+              </div>
+              <div>
+                <h4>設計で工夫したこと</h4>
+                <ul>
+                  <li>社員の氏名を登録しない設計にして、情報流出のリスクを抑えた</li>
+                  <li>乗務員がLINEでうまく回しているやり取りは妨げず、届いていない人に届ける役割に絞った</li>
+                  <li>写真で撮った張り紙は、生成AIで書き起こして人が確認してから載せる運用にした</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="career" class="sec">
+    <div class="wrap sec-grid">
+      <div class="sec-head">
+        <h2>経歴<span class="en">Career</span></h2>
+        <p>店舗、営業、物流、管理部門の現場を経て、業務の自動化へ。いまは現場の情報共有の仕組みづくりに取り組んでいます。</p>
+      </div>
+      <div class="career">
+        <div class="item">
+          <span class="when">2000年〜2019年</span>
+          <div>
+            <h3>店舗・海外営業・物流・管理部門</h3>
+            <p>店長として店舗運営とスタッフ管理を経験したのち、水産系商社の韓国現地法人で、法人営業、物流部門(6名)のマネジメント、購買、業績管理を担当。その後は輸入卸、Webマーケティング、物流などの企業で経理・財務・法務・総務を担い、投資助言会社では監査役として管理体制を立て直しました。どの職場でも、手順書やチェックリスト、タスク管理表を整えて、業務を回る仕組みにすることを続けてきました。</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="when">2019年6月〜2020年1月</span>
+          <div>
+            <h3>WinActorによる物流・受発注業務の自動化</h3>
+            <p>飲料メーカーで、1人体制でRPAによる業務の自動化を担当。現場へのヒアリングで自動化する業務を見きわめ、業務フローの提案から、シナリオの設計・開発・テスト・運用・改修までを一貫して行いました。25〜30本のシナリオを作成し、6業務・15シナリオが本番で稼働。早いものは1日で開発し、1週間で運用を開始しました。社内担当者が自分で直せるよう、内製化の支援と手順書の整備も行いました。</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="when">2020年4月</span>
+          <div>
+            <h3>PythonによるRPA自動化ファイルの開発支援</h3>
+            <p>不動産事業グループのシステム会社で、2人体制でグループ内業務の自動化ファイルを開発。2ファイルの開発を完了し、OCR関連の作業も補助しました。</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="when">2026年</span>
+          <div>
+            <h3>社内ポータル(タクシー会社向けPOC)</h3>
+            <p>現場の情報共有の課題を、無料のツールで解決できるかを検証しました。</p>
+          </div>
+        </div>
+        <div class="item now">
+          <span class="when">2026年10月〜</span>
+          <div>
+            <h3>民泊管理デモ</h3>
+            <p>宿泊者・管理者・清掃スタッフをつなぐ仕組みを、ポートフォリオとして公開しています。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="profile" class="sec">
+    <div class="wrap sec-grid">
+      <div class="sec-head"><h2>プロフィール<span class="en">Profile</span></h2></div>
+      <div>
+        <dl class="facts">
+          <dt>拠点</dt><dd>広島</dd>
+          <dt>言語</dt><dd>日本語、英語、韓国語</dd>
+          <dt>資格</dt>
+          <dd><ul>
+            <li>基本情報技術者</li>
+            <li>情報セキュリティマネジメント</li>
+            <li>ITパスポート</li>
+            <li>MOS Excel 2016 Expert</li>
+            <li>宅地建物取引士 資格登録済み</li>
+            <li>AFP(日本FP協会認定)</li>
+          </ul></dd>
+        </dl>
+        <div class="how">
+          <h3>開発の進め方</h3>
+          <p>プログラムの作成は生成AI(Claude)が担い、私は課題の整理、技術の選定、判断、動作確認、運用を担当しています。作る前に提案と合意をしてから着手し、公開する前に動作を検証します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="sec">
+    <div class="wrap sec-grid">
+      <div class="sec-head"><h2>お手伝い<span class="en">Services</span></h2></div>
+      <div class="services">
+        <div><h3>情報共有の仕組みづくり</h3><p>張り紙や口頭、グループLINEに散らばった連絡を、スマホで見られる一つの場所にまとめます。</p></div>
+        <div><h3>小さな業務ツールの開発</h3><p>予約や清掃の記録、日々の報告など、今の業務に合わせた画面を、無料・低コストのサービスで作ります。</p></div>
+        <div><h3>業務の自動化</h3><p>Excelや基幹システムへの転記など、毎日の繰り返し作業を自動化します。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="sec">
+    <div class="wrap sec-grid">
+      <div class="sec-head"><h2>連絡先<span class="en">Contact</span></h2></div>
+      <div>
+        <p class="contact-big">小さな困りごとから、<br>お気軽にご相談ください。</p>
+        <div class="links">
+          <a class="btn primary" data-href="mail">メールで相談する</a>
+          <a class="btn" data-href="github" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <p class="note" data-bind="mailNote"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="kasuri" aria-hidden="true"></div>
+<footer><div class="wrap"><span>© <span data-bind="year"></span> <span data-bind="name">李匡&#xFA4F;</span></span><span>Hiroshima</span></div></footer>
+
+<script>
+/* ===== 設定:ここだけ書き換えてください ===== */
+const CONFIG = {
+  name: "李匡\uFA4F",
+  mimpakuGuide: "",    // 例:"https://mimpaku-demo.pages.dev/p/hiroshima-demo"
+  mimpakuConsole: "",  // 例:管理画面のURL
+  mimpakuRepo: "https://github.com/kyosukelee/mimpaku-demo",
+  demoAccountNote: "管理画面の閲覧専用デモアカウントは、ご希望の方にお知らせします。",
+  github: "https://github.com/kyosukelee",
+  mail: "",            // 例:"contact@example.com"(空なら「準備中」と表示)
+  mimpakuShot: "images/mimpaku.png",
+  portalShot: "images/portal.png"
+};
+/* ========================================== */
+
+document.querySelectorAll('[data-bind]').forEach(el => {
+  const k = el.dataset.bind;
+  if (k === 'year') { el.textContent = new Date().getFullYear(); return; }
+  if (k === 'mailNote') { el.textContent = CONFIG.mail ? '' : 'メールアドレスは準備中です。GitHubからもご連絡いただけます。'; return; }
+  if (CONFIG[k] !== undefined) el.textContent = CONFIG[k];
+});
+
+document.querySelectorAll('[data-href]').forEach(a => {
+  const k = a.dataset.href;
+  let url = CONFIG[k];
+  if (k === 'mail' && url) url = 'mailto:' + url;
+  if (url) a.href = url; else a.remove();
+});
+
+document.querySelectorAll('figure.shot').forEach(fig => {
+  const img = fig.querySelector('img');
+  const src = CONFIG[fig.dataset.img];
+  if (!src) { fig.classList.add('missing'); return; }
+  img.addEventListener('error', () => fig.classList.add('missing'));
+  img.src = src;
+});
+
+document.querySelectorAll('.delta .draw').forEach(p => {
+  p.style.setProperty('--len', Math.ceil(p.getTotalLength ? p.getTotalLength() : 800));
+});
+</script>
+</body>
+</html>
