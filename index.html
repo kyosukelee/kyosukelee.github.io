@@ -7,18 +7,12 @@
 <meta name="description" content="広島を拠点に、民泊やタクシーの現場の情報共有を、無料・低コストのツールで整えています。制作物と経歴の紹介。">
 <style>
 :root{
-  --bg:#F5F3EE; --paper:#FBFAF7; --ink:#22252B; --sub:#5F636B; --faint:#8A8E95;
-  --ai:#1F3A5F; --aijiro:#DCE2E8; --line:#DAD7CF; --shu:#B33A2E;
+  --bg:#0F1C2E; --paper:#152740; --ink:#ECE8DF; --sub:#B6BFCB; --faint:#8794A6;
+  --ai:#9DBBE0; --aijiro:#1D3352; --line:#29405F; --shu:#C94A3B;
+  --kasuri:#24426B; --kasuri-mark:rgba(236,232,223,.85);
   --serif:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP","Noto Serif CJK JP",serif;
   --sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;
-  color-scheme:light;
-}
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#101A27; --paper:#162234; --ink:#ECE9E2; --sub:#AEB5BF; --faint:#7F8894;
-    --ai:#8FB0D6; --aijiro:#22344B; --line:#2A3A50; --shu:#D9604F;
-    color-scheme:dark;
-  }
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
@@ -30,15 +24,15 @@ h1,h2,h3{word-break:auto-phrase}
 .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
 @media (max-width:600px){.wrap{padding:0 20px}}
 
-.kasuri{height:8px;background-color:var(--ai);
-  background-image:linear-gradient(90deg,transparent 5px,var(--bg) 5px 13px,transparent 13px),linear-gradient(90deg,transparent 8px,var(--bg) 8px 10px,transparent 10px);
+.kasuri{height:8px;background-color:var(--kasuri);
+  background-image:linear-gradient(90deg,transparent 5px,var(--kasuri-mark) 5px 13px,transparent 13px),linear-gradient(90deg,transparent 8px,var(--kasuri-mark) 8px 10px,transparent 10px);
   background-size:18px 2px,18px 6px;background-position:0 3px,0 1px;background-repeat:repeat-x}
 
 /* header */
 header.site{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px)}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
 .brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.16em;color:var(--ink);text-decoration:none}
-.seal{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--shu);color:#FBFAF7;border-radius:3px;font-size:11px;line-height:1.05;writing-mode:vertical-rl;letter-spacing:0}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:26px;height:46px;background:var(--shu);color:#FBFAF7;border-radius:3px;font-size:11px;line-height:1.05;writing-mode:vertical-rl;letter-spacing:0}
 nav.site{display:flex;gap:28px}
 nav.site a{color:var(--sub);text-decoration:none;font-size:13.5px;letter-spacing:.12em}
 nav.site a:hover{color:var(--ai)}
@@ -156,7 +150,7 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
 <div class="kasuri" aria-hidden="true"></div>
 <header class="site">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="seal" aria-hidden="true">匡&#xFA4F;</span><span data-bind="name">李匡&#xFA4F;</span></a>
+    <a class="brand" href="#top"><span class="seal" aria-hidden="true">李匡&#xFA4F;</span><span data-bind="name">李匡&#xFA4F;</span></a>
     <nav class="site" aria-label="ページ内の移動">
       <a href="#works">制作物</a><a href="#career">経歴</a><a href="#profile">プロフィール</a>
     </nav>
