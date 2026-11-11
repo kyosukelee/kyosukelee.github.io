@@ -103,6 +103,14 @@ nav.site a:hover{color:var(--ai)}
 .btn.primary{background:var(--ai);color:var(--paper)}
 .btn:hover{filter:brightness(1.12)}
 .note{font-size:12.5px;color:var(--faint);margin:14px 0 0}
+.demo-account{display:grid;gap:16px;font-size:13.5px;color:var(--sub);background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:16px 18px;max-width:32em}
+.demo-title{margin:0 0 6px;font-size:13px;color:var(--sub);line-height:1.7}
+.demo-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 12px;padding:8px 0 6px;border-top:1px solid var(--line)}
+.demo-label{grid-column:1/-1;font-size:12px;color:var(--faint);letter-spacing:.06em}
+.demo-account code{font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:13.5px;color:var(--ink);letter-spacing:.02em;user-select:all;word-break:break-all}
+.copy{font:inherit;font-size:12px;line-height:1.6;padding:3px 12px;border:1px solid var(--line);background:transparent;color:var(--ai);border-radius:2px;cursor:pointer;letter-spacing:.06em}
+.copy:hover{border-color:var(--ai)}
+.copy.done{color:var(--ink);border-color:var(--ai)}
 details.more{margin:28px 0 0;border-top:1px solid var(--line)}
 details.more summary{list-style:none;cursor:pointer;padding:16px 0;font-size:14px;color:var(--ai);letter-spacing:.1em;display:flex;align-items:center;gap:10px}
 details.more summary::-webkit-details-marker{display:none}
@@ -361,11 +369,12 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
 /* ===== 設定:ここだけ書き換えてください ===== */
 const CONFIG = {
   name: "李 匡\uFA4F",
-  mimpakuGuide: "",    // 例:"https://mimpaku-demo.pages.dev/p/hiroshima-demo"
-  mimpakuConsole: "",  // 例:管理画面のURL
+  mimpakuGuide: "https://mimpaku-demo.pages.dev/p/hiroshima-demo/ja/",
+  mimpakuConsole: "https://mimpaku-console.pages.dev/",
   mimpakuStaff: "",    // 清掃スタッフ用アプリのURL(管理画面と同じなら空のまま)
-  demoUser: "",        // 閲覧専用デモアカウントのID(載せる場合のみ)
-  demoPass: "",        // 同パスワード(載せる場合のみ)
+  demoUser: "viewer@example.com",   // 閲覧専用デモアカウントのメールアドレス
+  demoPass: "bmwScXCNlpr6TggF",     // 同パスワード
+  stayCode: "DEMO-2026",           // 宿泊者ガイドの滞在コード
   mimpakuRepo: "https://github.com/kyosukelee/mimpaku-demo",
   demoAccountNote: "管理画面の閲覧専用デモアカウントは、ご希望の方にお知らせします。",
   github: "https://github.com/kyosukelee",
@@ -382,10 +391,66 @@ const CONFIG = {
 };
 /* ========================================== */
 
+function copyText(text, btn) {
+  const done = () => {
+    btn.textContent = 'コピーしました';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('done'); }, 1600);
+  };
+  const fallback = () => {
+    const t = document.createElement('textarea');
+    t.value = text;
+    t.setAttribute('readonly', '');
+    t.style.position = 'fixed';
+    t.style.opacity = '0';
+    document.body.append(t);
+    t.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    t.remove();
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done, fallback);
+  } else {
+    fallback();
+  }
+}
+
 document.querySelectorAll('[data-bind]').forEach(el => {
   const k = el.dataset.bind;
   if (k === 'year') { el.textContent = new Date().getFullYear(); return; }
-  if (k === 'demoAccountNote' && CONFIG.demoUser) { el.textContent = '閲覧専用デモアカウント ID:' + CONFIG.demoUser + ' / パスワード:' + CONFIG.demoPass + '(内容の変更はできません)'; return; }
+  if (k === 'demoAccountNote' && (CONFIG.demoUser || CONFIG.stayCode)) {
+    el.textContent = '';
+    el.classList.add('demo-account');
+    const group = (title, rows) => {
+      const g = document.createElement('div');
+      const h = document.createElement('p');
+      h.className = 'demo-title';
+      h.textContent = title;
+      g.append(h);
+      rows.forEach(([label, val]) => {
+        if (!val) return;
+        const r = document.createElement('div');
+        r.className = 'demo-row';
+        const l = document.createElement('span');
+        l.className = 'demo-label';
+        l.textContent = label;
+        const c = document.createElement('code');
+        c.textContent = val;
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'copy';
+        b.textContent = 'コピー';
+        b.setAttribute('aria-label', label + 'をコピー');
+        b.addEventListener('click', () => copyText(val, b));
+        r.append(l, c, b);
+        g.append(r);
+      });
+      return g;
+    };
+    if (CONFIG.stayCode) el.append(group('宿泊者ガイド:滞在中の方向けの案内を開くときに入力します', [['滞在コード', CONFIG.stayCode]]));
+    if (CONFIG.demoUser) el.append(group('管理画面:閲覧専用のデモアカウントです(内容の変更はできません)', [['メールアドレス', CONFIG.demoUser], ['パスワード', CONFIG.demoPass]]));
+    return;
+  }
   if (k === 'mailNote') { el.textContent = CONFIG.mail ? '' : 'メールアドレスは準備中です。GitHubからもご連絡いただけます。'; return; }
   if (CONFIG[k] !== undefined) el.textContent = CONFIG[k];
 });
