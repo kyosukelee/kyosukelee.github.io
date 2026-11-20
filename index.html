@@ -82,7 +82,7 @@ nav.site a:hover{color:var(--ai)}
 /* works */
 .work{margin:0 0 96px}
 .work:last-child{margin-bottom:0}
-.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:28px 24px}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px 24px}
 .shots-note{font-size:12px;color:var(--faint);margin:10px 0 0;letter-spacing:.06em}
 /* 画像の枠は縦横比16:10にそろえ、画像は枠の中に収める(縦長・横長の画面でも枠の大きさは同じ) */
 .shot{margin:0}
@@ -211,7 +211,7 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
           </div>
           <div class="shots" data-shots="smeShots"></div>
           <p class="shots-note">画面はすべて架空のデータです。画像をクリックすると拡大して開きます</p>
-          <p class="problem">中小企業の見積から請求までは、Excelの書式と手作業の転記で回っていることが多く、インボイス制度や電子帳簿保存法への対応も負担になっています。見積を受注へ、受注を請求書へと引き継ぎ、月締めのまとめ請求と入金の管理までを一つの流れにしました。同じコードのまま、複数の会社で共有するサービスとしても、会社ごとの専用環境としても動かせる構成です。</p>
+          <p class="problem">中小企業の見積から請求までは、Excelの書式と手作業の転記で回っていることが多く、インボイス制度や電子帳簿保存法への対応も負担になっています。見積を受注へ、受注を請求書へと引き継ぎ、月締めのまとめ請求、銀行の明細を使った入金消込、会計ソフトへの仕訳の受け渡しまでを一つの流れにしました。同じコードのまま、複数の会社で共有するサービスとしても、会社ごとの専用環境としても動かせる構成です。</p>
           <ul class="tags"><li>Python</li><li>FastAPI</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li><li>Docker</li></ul>
           <div class="links">
             <a class="btn" data-href="smeRepo" target="_blank" rel="noopener">GitHubで見る</a>
@@ -225,6 +225,8 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
                 <ul>
                   <li>見積・受注・請求の引き継ぎと、見積書・注文請書・請求書のPDF発行</li>
                   <li>取引先ごとの締め日による月締めのまとめ請求、繰越の表示、一部入金とまとめ入金</li>
+                  <li>銀行の入出金明細(CSV)を取り込み、振込名義と金額から請求書の候補を出す入金消込。振込手数料を差し引いた入金にも対応</li>
+                  <li>勘定奉行・弥生会計・freee会計・マネーフォワード クラウド会計の取り込み形式での仕訳CSVの出力</li>
                   <li>商品・サービスマスタからの明細入力</li>
                   <li>個人事業主への対応(屋号の印字、免税事業者、源泉徴収)</li>
                   <li>解約に備えた、全データのCSVと控えPDFの一括書き出し</li>
@@ -236,7 +238,9 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
                   <li>会社ごとのデータを、APIの確認とデータベースの行単位の権限の二重で分けた</li>
                   <li>消費税は税率ごとに1回だけ端数を処理し、登録番号と取引日を載せたインボイス対応の請求書にした</li>
                   <li>発行した書類は控えのPDFとハッシュ値を残し、変更や削除をデータベースで禁止した。日付・金額・取引先で検索できる(電子帳簿保存法を想定)</li>
-                  <li>同時に操作しても二重に請求されないようにし、106件の自動テストで確かめた</li>
+                  <li>銀行ごとに違う明細の列の並び・文字コード・和暦の日付を吸収し、振込名義は半角カナや「カ)」などの法人の略語をそろえて照合した</li>
+                  <li>仕訳は出力済みを記録して二重計上を防ぎ、出力後に訂正・取消した請求書や入金は逆仕訳で打ち消すようにした</li>
+                  <li>同時に操作しても二重に請求されないようにし、163件の自動テストで確かめた</li>
                 </ul>
               </div>
             </div>
@@ -371,7 +375,7 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
           <span class="when">2026年11月〜</span>
           <div>
             <h3>見積・受注・請求アプリ</h3>
-            <p>経理の実務経験をもとに、中小企業の見積から請求・入金までをつなぐ業務アプリを開発しています。</p>
+            <p>経理の実務経験をもとに、中小企業の見積から請求・入金消込・会計ソフトへの仕訳の受け渡しまでをつなぐ業務アプリを開発しています。</p>
           </div>
         </div>
       </div>
@@ -443,7 +447,8 @@ const CONFIG = {
   smeShots: [
     { src: "images/sme-quote.jpg", label: "見積の作成" },
     { src: "images/sme-invoice-pdf.jpg", label: "請求書PDF" },
-    { src: "images/sme-settings.jpg", label: "自社情報(管理者)" }
+    { src: "images/sme-reconcile.jpg", label: "入金消込" },
+    { src: "images/sme-journal.jpg", label: "仕訳の出力" }
   ],
   portalShots: [
     { src: "images/portal-app.png", label: "社員画面" },
