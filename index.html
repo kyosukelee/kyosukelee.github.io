@@ -276,6 +276,7 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
                   <li>商品・サービスマスタからの明細入力</li>
                   <li>個人事業主への対応(屋号の印字、免税事業者、源泉徴収)</li>
                   <li>解約に備えた、全データのCSVと控えPDFの一括書き出し</li>
+                  <li>管理者向けの操作の履歴。誰が・いつ・何を変えたかを変更前と変更後で確かめられ、控えや添付を開いた・データを持ち出した記録も見られる</li>
                 </ul>
               </div>
               <div>
@@ -289,7 +290,8 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
                   <li>承認ルートは申請した時点で、社員の上長と担当役割から自動で組み立てる。金額の条件で承認の段を足し、申請者本人が承認者になる段は省く。承認の記録は、その段の承認者本人しか書けないようデータベースでも確かめた</li>
                   <li>生成AIは注文書の読み取りだけに使い、取引先の照合と、金額・税率・重複の確認は普通のプログラムで行った。金額は自社の設定で計算し直して注文書と照らし合わせ、合わなければ確認を求める。登録は必ず人が確定する</li>
                   <li>AIが読み取った値と人が直した値を項目ごとに記録し、どこを読み違えやすいかを数えられるようにした。AIの提供元は設定で切り替えられ、データを外に出したくない会社は手元で動くモデルを選べる構成にした</li>
-                  <li>同時に操作しても二重に請求されないようにし、233件の自動テストで確かめた(AIの部分は、決まった答えを返す見本用のAIで確かめた)</li>
+                  <li>データの変更はデータベースのトリガーで項目ごとに自動で記録し、画面を通さない変更も漏れないようにした。記録は消したり書き換えたりできない。APIはリクエストごとに番号を振り、想定外のエラーは画面に番号だけを出して、内容はログに残す。同じ番号を変更の記録にも残し、問い合わせから原因までたどれるようにした</li>
+                  <li>同時に操作しても二重に請求されないようにし、244件の自動テストで確かめた(AIの部分は、決まった答えを返す見本用のAIで確かめた)</li>
                 </ul>
               </div>
             </div>
@@ -514,7 +516,9 @@ const CONFIG = {
     { src: "images/sme-reconcile.jpg", label: "入金消込" },
     { src: "images/sme-journal.jpg", label: "仕訳の出力" },
     { src: "images/sme-workflow.jpg", label: "申請と承認ルート" },
-    { src: "images/sme-workflow-settings.jpg", label: "承認ルートの設定" }
+    { src: "images/sme-workflow-settings.jpg", label: "承認ルートの設定" },
+    { src: "images/sme-logs.jpg", label: "操作の履歴(変更前と変更後)" },
+    { src: "images/sme-logs-access.jpg", label: "閲覧・書き出しの記録" }
   ],
   tourShots: [
     { src: "images/tour-dashboard.jpg", label: "ダッシュボード" },
