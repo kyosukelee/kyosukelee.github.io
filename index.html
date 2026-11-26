@@ -204,6 +204,54 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
         <p>「誰の、どんな困りごとを、どう減らすか」から考えて作りました。</p>
       </div>
       <div>
+        <article class="work" aria-labelledby="w5">
+          <div class="work-head">
+            <h3 id="w5">業務棚卸し</h3>
+            <p class="kind">コンサルタント向けの業務の棚卸し・可視化ツール / 開発中(第1段階まで完成)</p>
+          </div>
+          <div class="shots" data-shots="gyomuShots"></div>
+          <p class="shots-note">画面はすべて架空のデータです。画像をクリックすると拡大して開きます</p>
+          <p class="problem">中小企業の業務改善は、「誰が、どの業務に、どれだけ時間を使っているか」を知る現状分析から始まります。しかし、聞き取り内容はコンサルタントの手元のメモに散らばり、現場の担当者しか知らない手間は見えにくいままです。担当者が自分のスマホから、業務をタップ中心で入力できるようにしました。頻度と1回の時間から月の手間を自動で計算し、コンサルタントと責任者は全部門の業務を一覧で確かめられます。今後、面談メモから生成AIで業務一覧の下書きを作り、効果と導入の難しさで自動化の優先順位を決め、提案書の下書きまでをつなげます。</p>
+          <ul class="tags"><li>Python</li><li>React</li><li>TypeScript</li><li>AWS Lambda</li><li>API Gateway</li><li>DynamoDB</li><li>Cognito</li><li>CloudFront</li><li>AWS CDK</li><li>Playwright</li></ul>
+          <p class="note">開発中のため、公開デモはありません。公開デモは、提案書の出力まで作ったあとに用意する予定です。</p>
+          <details class="more">
+            <summary><span class="open-txt">機能と設計の詳細を見る</span><span class="close-txt">詳細を閉じる</span></summary>
+            <div class="more-body">
+              <div>
+                <h4>できること(第1段階)</h4>
+                <ul>
+                  <li>メールに届くコードでのログイン。パスワードは使わず、招待した人だけが使える</li>
+                  <li>担当者のスマホ画面。業務の名前だけを文字で入れ、頻度・使っている道具・困っていることはタップで選ぶ。1回の時間を選ぶと、月の手間をその場で計算する</li>
+                  <li>下書き保存と、確定した業務だけを合計する集計</li>
+                  <li>コンサルタント・責任者向けの業務一覧(部門での絞り込み、担当者、困っていること、状態)</li>
+                  <li>メンバーの招待(コンサルタントは責任者と担当者を、責任者は担当者だけを招待できる)と部門の管理</li>
+                  <li>顧客ごとの時給と、優先順位の区分のしきい値の設定</li>
+                </ul>
+              </div>
+              <div>
+                <h4>設計で工夫したこと</h4>
+                <ul>
+                  <li>会社ごとのデータを、APIの確認とAWSの権限(IAM)の二重で分けた。顧客企業のデータを読み書きするときは、その会社のデータにしか触れない権限をリクエストごとに一時的に発行し、アプリのコードに誤りがあっても他社のデータには届かない</li>
+                  <li>担当者は自分の業務だけが見え、同じ部門の人の業務も見えない。困っていることを正直に書いてもらうため</li>
+                  <li>費用を常時無料の範囲に収めるよう設計した(DynamoDBの容量の上限、APIの1秒あたりのリクエスト数の上限、月約1,000円の予算アラート)</li>
+                  <li>ログインの方式、データベース、生成AIの呼び出し先を、それぞれ差し替えられる層に分けた</li>
+                  <li>AWSの構成をコード(AWS CDK)で管理し、顧客ごとの専用環境も同じコードで作れるようにした</li>
+                  <li>12件の自動テスト(AWSは模擬)と、本物のブラウザでログインから業務の入力・一覧の確認までを操作する画面テストで確かめた</li>
+                  <li>これまでの制作物(Supabase、Vercel)とは別に、AWSのサーバーレス構成で作った</li>
+                </ul>
+              </div>
+              <div>
+                <h4>今後の予定</h4>
+                <ul>
+                  <li>面談メモから業務一覧の下書きを作る機能(Amazon Bedrock。処理を日本国内のリージョンに限定する)と、担当者によるAIの下書きの確認</li>
+                  <li>効果と導入の難しさの2軸による優先順位のマトリクス、効果の試算、お客様の判断(やりたい・保留・対象外)</li>
+                  <li>提案書のPDF出力と、公開デモ</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </article>
+
         <article class="work" aria-labelledby="w4">
           <div class="work-head">
             <h3 id="w4">観光手配案件管理</h3>
@@ -436,6 +484,13 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
             <p>旅行の手配業務(宿・バス・ガイドなどへの依頼と回答、期限と取消料の管理)を一つにまとめるアプリを、これまでと別の技術構成で作り、デモを公開しています。</p>
           </div>
         </div>
+        <div class="item now">
+          <span class="when">2026年11月〜</span>
+          <div>
+            <h3>業務棚卸し</h3>
+            <p>顧客と一緒に業務を棚卸しし、自動化の候補を選ぶためのコンサルタント向けツールを、AWSのサーバーレス構成で開発しています。</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -519,6 +574,11 @@ const CONFIG = {
     { src: "images/sme-workflow-settings.jpg", label: "承認ルートの設定" },
     { src: "images/sme-logs.jpg", label: "操作の履歴(変更前と変更後)" },
     { src: "images/sme-logs-access.jpg", label: "閲覧・書き出しの記録" }
+  ],
+  gyomuShots: [
+    { src: "images/gyomu-staff.jpg", label: "担当者のスマホ画面(わたしの業務・業務の追加)" },
+    { src: "images/gyomu-tasks.jpg", label: "業務一覧(コンサルタント・責任者)" },
+    { src: "images/gyomu-members.jpg", label: "メンバーの招待と一覧" }
   ],
   tourShots: [
     { src: "images/tour-dashboard.jpg", label: "ダッシュボード" },
