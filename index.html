@@ -213,7 +213,10 @@ footer .wrap{display:flex;justify-content:space-between;padding-top:28px;padding
           <p class="shots-note">画面はすべて架空のデータです。画像をクリックすると拡大して開きます</p>
           <p class="problem">中小企業の業務改善は、「誰が、どの業務に、どれだけ時間を使っているか」を知る現状分析から始まります。しかし、聞き取り内容はコンサルタントの手元のメモに散らばり、現場の担当者しか知らない手間は見えにくいままです。担当者が自分のスマホから、業務をタップ中心で入力できるようにしました。頻度と1回の時間から月の手間を自動で計算し、コンサルタントと責任者は全部門の業務を一覧で確かめられます。今後、面談メモから生成AIで業務一覧の下書きを作り、効果と導入の難しさで自動化の優先順位を決め、提案書の下書きまでをつなげます。</p>
           <ul class="tags"><li>Python</li><li>React</li><li>TypeScript</li><li>AWS Lambda</li><li>API Gateway</li><li>DynamoDB</li><li>Cognito</li><li>CloudFront</li><li>AWS CDK</li><li>Playwright</li></ul>
-          <p class="note">開発中のため、公開デモはありません。公開デモは、提案書の出力まで作ったあとに用意する予定です。</p>
+          <div class="links">
+            <a class="btn" data-href="gyomuRepo" target="_blank" rel="noopener">GitHubで見る</a>
+          </div>
+          <p class="note">開発中のため、公開デモはありません。公開デモは、提案書の出力まで作ったあとに用意する予定です。GitHubの手順で、お手元のAWSアカウントに構築できます。</p>
           <details class="more">
             <summary><span class="open-txt">機能と設計の詳細を見る</span><span class="close-txt">詳細を閉じる</span></summary>
             <div class="more-body">
@@ -551,6 +554,7 @@ const CONFIG = {
   smeRepo: "https://github.com/kyosukelee/sme-app",
   tourDemo: "https://tour-ops-lovat.vercel.app",
   tourRepo: "https://github.com/kyosukelee/tour-ops",
+  gyomuRepo: "https://github.com/kyosukelee/as-is-analysis",
   // 観光手配案件管理のデモ用アカウント(ログイン画面にも出ている、誰でも使える架空のアカウント)
   tourUsers: [["管理者", "admin@tour-ops.example"], ["手配担当", "staff1@tour-ops.example"], ["パスワード", "tour-ops-demo"]],
   demoAccountNote: "管理画面の閲覧専用デモアカウントは、ご希望の方にお知らせします。",
